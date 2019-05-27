@@ -1,0 +1,21 @@
+<div class="sign-in-wrapper">
+  <div class="sign-container">
+    <div class="text-center">
+      <h4>Register</h4>
+    </div>
+    <div class="alert alert-danger" *ngIf="error" >{{errormsg}}</div>
+    <form class="sign-in-form" (ngSubmit)="onSignup()">
+      <div class="form-group">
+        <input type="text" class="form-control" name="username" id="username" 
+        [(ngModel)]="username" placeholder="Username" required="">
+      </div>
+      <div class="form-group">
+        <input type="password" class="form-control" name="password" id="password" 
+        [(ngModel)]="password" placeholder="Password" required="">
+      </div>
+      <button class="btn btn-info btn-block">Register</button>
+      <p class="text-muted text-center help-block"><small>Already have an account?</small></p>
+      <a class="btn btn-md btn-default btn-block" [routerLink]="['/login']">Login</a>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,176 @@
+<div class="ui-content-body"  style="text-align: center;">
+  <div class="ui-container">
+    <div class="row">
+       
+      <div class="col-md-12">    
+             
+        <div class="panel">
+            <div class="btnstyle"> 
+                <a href="" data-toggle="modal" data-target="#exampleModalLong"><button class="btn btn-success">Add New Order</button></a>
+            </div>
+            <div class="panel-header">
+                <h3>List of Orders</h3>          
+            </div>          
+          <div class="alert alert-danger" *ngIf="error">{{errormsg}}</div>
+          <div class="panel-body">
+             <div class="table-responsive">
+              <table class="table  table-hover table-bordered general-table table-striped">
+                <thead>
+                  <tr>
+                    <th class="col-md-1">Sr. No.</th>
+                    <th class="col-md-1">Order Number</th>
+                    <th class="col-md-1">Order Due Date</th>
+                    <th class="col-md-1">Customer buyer name</th>
+                    <th class="col-md-1">Customer Address</th>
+                    <th class="col-md-1">Customer Phone</th>
+                    <th class="col-sm-1">Order Total</th>
+                    <th class="col-md-2">Perform Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let order of orders; let i = index" [attr.data-index]="i">
+                    <td>{{i+1}}</td>
+                    <td>{{order.orderNumber}}</td>
+                    <td>{{order.orderDueDate | date:'dd-MM-yyyy'}}</td>
+                    <td>{{order.customerBuyerName}}</td>
+                    <td>{{order.customeAddress}}</td>
+                    <td>{{order.customerPhone}}</td>
+                    <td>{{order.orderTotal}}</td>
+                    <td class="row">
+                        <a href="" data-toggle="modal" data-target="#exampleModalLong1">
+                          <button class="btn btn-warning" type="button" (click)="onEdit(order._id)">Edit</button>
+                        </a> &nbsp;&nbsp;
+                        <a href="" data-toggle="modal" data-target="#deleteModal">
+                          <button class="btn btn-danger" type="button" (click)="onDelete(order._id)" >Delete</button>
+                          </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ADD ORDER POPUP -->
+<div class="container">
+    <div class="modal fade" id="exampleModalLong"  role="dialog" 
+                    aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content modal-md">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="exampleModalLongTitle" >
+                        Add New Order</h4>
+                </div>
+                <div class="modal-body">
+                  <form #f="ngForm" (ngSubmit)="onAdd()">  
+                    <div class="form-group">
+                      <label for="orderDueDate">Customer Due Date</label>
+                      <input type="date" name="orderDueDate" id="orderDueDate" [(ngModel)]="orderDueDate" class="form-control" 
+                          placeholder="Order Due Date " required>
+                    </div>
+                    <div class="form-group">
+                      <label for="customerBuyerName">Customer Buyer Name</label>
+                      <input type="text" name="customerBuyerName" id="customerBuyerName" [(ngModel)]="customerBuyerName" class="form-control" 
+                          placeholder="Customer Buyer Name" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="customeAddress">Customer Address</label>
+                      <input type="text" name="customeAddress" id="customeAddress" [(ngModel)]="customeAddress" class="form-control" 
+                          placeholder="Customer Address" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="customerPhone">Customer Phone</label>
+                      <input type="number" name="customerPhone" id="customerPhone" [(ngModel)]="customerPhone" class="form-control" 
+                          placeholder="Customer Phone" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="orderTotal">Order Total</label>
+                      <input type="text" name="orderTotal" id="orderTotal" [(ngModel)]="orderTotal" class="form-control" 
+                          placeholder="Order Total" required>
+                    </div>
+                    <div class="form-group">
+                     <button type="submit" class="btn btn-success">Add Order</button> &nbsp;&nbsp;&nbsp;
+                     <button class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                    </div>
+                  </form>                               
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- EDIT ORDER POPUP -->
+<div class="container">
+    <div class="modal fade" id="exampleModalLong1"  role="dialog" 
+                    aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content modal-md">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="exampleModalLongTitle" >
+                        Update Order</h4>
+                </div>
+                <div class="modal-body">
+                  <form #f="ngForm" (ngSubmit)="onEditSubmit(f.value)"> 
+                    <input type="text" name="_id" id="_id" [(ngModel)]="_id" hidden>
+                    <input type="text" name="token" id="token" [(ngModel)]="token" hidden>                     
+                      <div class="form-group">
+                          <label for="orderDueDate">Customer Due Date</label>
+                          <input type="date" name="orderDueDate" id="orderDueDate" [(ngModel)]="orderDueDate" class="form-control" 
+                              placeholder="Order Due Date" value={{orderDueDate}} required>
+                        </div>
+                        <div class="form-group">
+                          <label for="customerBuyerName">Customer Buyer Name</label>
+                          <input type="text" name="customerBuyerName" id="customerBuyerName" [(ngModel)]="customerBuyerName" class="form-control" 
+                              placeholder="Customer Buyer Name" required>
+                        </div>
+                        <div class="form-group">
+                          <label for="customeAddress">Customer Address</label>
+                          <input type="text" name="customeAddress" id="customeAddress" [(ngModel)]="customeAddress" class="form-control" 
+                              placeholder="Customer Address" required>
+                        </div>
+                        <div class="form-group">
+                          <label for="customerPhone">Customer Phone</label>
+                          <input type="number" name="customerPhone" id="customerPhone" [(ngModel)]="customerPhone" class="form-control" 
+                              placeholder="Customer Phone" required>
+                        </div>
+                        <div class="form-group">
+                          <label for="orderTotal">Order Total</label>
+                          <input type="text" name="orderTotal" id="orderTotal" [(ngModel)]="orderTotal" class="form-control" 
+                              placeholder="Order Total" required>
+                        </div>
+                        <div class="form-group">
+                         <button type="submit" class="btn btn-success">Update</button> &nbsp;&nbsp;&nbsp;
+                         <button class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                        </div>
+                  </form>                          
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- DELETE POPUP -->
+<div class="container">
+    <div class="modal fade" id="deleteModal"  role="dialog" 
+                    aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content modal-md">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="exampleModalLongTitle" >
+                        Update Order</h4>
+                </div>
+                <div class="modal-body">
+                 Do you want to delete?                        
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" (click)="onDeleteSubmit()" >Delete</button> &nbsp;&nbsp;&nbsp;
+                    <button class="btn btn-success" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
